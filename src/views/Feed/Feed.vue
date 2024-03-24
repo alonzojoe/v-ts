@@ -1,31 +1,48 @@
 <template>
-    <Card class="mb-5">
-        <template #title>Simple Card</template>
-        <template #content>
-            <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
-            </p>
-        </template>
-    </Card>
-    <Card class="mb-5">
-        <template #title>Simple Card</template>
-        <template #content>
-            <p class="m-0">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
-                esse, cupiditate neque
-                quas!
-            </p>
-        </template>
-    </Card>
+    <div v-if="posts.length > 0">
+        <Card class="mb-5" v-for="(p, index) in posts" :key="index">
+            <template #title>{{ p.title }}</template>
+            <template #content>
+                <p class="m-0">
+                    {{ p.body }}
+                </p>
+            </template>
+        </Card>
+    </div>
+    <div class="mt-5" v-else>
+        <i class="pi pi-spin pi-spinner" style="font-size: 5rem"></i>
+    </div>
+
 </template>
 
 <script setup lang="ts">
+import { onMounted, ref, Ref } from 'vue'
 import Card from 'primevue/card';
 import api from '@/api'
+import { IPost } from './fTypes';
+
+
+const posts: Ref<IPost[]> = ref([])
+const fetchDate = async () => {
+    try {
+        const response = await api.get<IPost[]>('/posts')
+        if (response.data.length > 0) {
+            posts.value = response.data
+        }
+    } catch (error) {
+        const axiosError = error as AxiosError;
+        console.log('error fetching data', axiosError.message)
+    }
+}
+
+onMounted(async () => {
+    setTimeout(async () => {
+        await fetchDate()
+    }, 2000);
+
+})
+
+
 </script>
 
 <style scoped></style>
