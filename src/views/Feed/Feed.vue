@@ -20,6 +20,7 @@ import { onMounted, ref, Ref } from 'vue'
 import Card from 'primevue/card';
 import api from '@/api'
 import { IPost } from './fTypes';
+import { AxiosError } from "axios"
 
 
 const posts: Ref<IPost[]> = ref([])
@@ -29,7 +30,7 @@ const fetchDate = async () => {
         if (response.data.length > 0) {
             posts.value = response.data
         }
-    } catch (error) {
+    } catch (error: unknown) {
         const axiosError = error as AxiosError;
         console.log('error fetching data', axiosError.message)
     }
