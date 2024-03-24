@@ -1,13 +1,23 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import RouterBypass from "@/components/RouterBypass/RouterView.vue";
+
+const routes: RouteRecordRaw[] = [
+    {
+        path: '/',
+        component: () => import('@/layouts/AppLayout.vue'),
+        children: [
+            {
+                path: '',
+                name: 'feed',
+                component: () => import('@/views/Feed/Feed.vue')
+            }
+        ]
+    }
+]
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.VITE_BASE_URL),
     routes
 })
 
-const routes = [
-
-]
-
-
-export default router
+export default router;
