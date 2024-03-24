@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import RouterBypass from "@/components/RouterBypass/RouterView.vue";
+// import RouterBypass from "@/components/RouterBypass/RouterView.vue";
 
 const routes: RouteRecordRaw[] = [
     {
@@ -7,9 +7,14 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/layouts/AppLayout.vue'),
         children: [
             {
-                path: '',
+                path: '/',
                 name: 'feed',
                 component: () => import('@/views/Feed/Feed.vue')
+            },
+            {
+                path: '/photos',
+                name: 'photos',
+                component: () => import('@/views/Photos/Photos.vue')
             }
         ]
     }

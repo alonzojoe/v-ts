@@ -1,5 +1,16 @@
 <template>
-    <Card>
+    <Card class="mb-5">
+        <template #title>Simple Card</template>
+        <template #content>
+            <p class="m-0">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
+                numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis
+                esse, cupiditate neque
+                quas!
+            </p>
+        </template>
+    </Card>
+    <Card class="mb-5">
         <template #title>Simple Card</template>
         <template #content>
             <p class="m-0">
@@ -14,6 +25,7 @@
 
 <script setup lang="ts">
 import Card from 'primevue/card';
+import api from '@/api'
 </script>
 
 <style scoped></style>

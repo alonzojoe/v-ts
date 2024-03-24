@@ -13,7 +13,7 @@
                 </svg>
             </template>
             <template #item="{ item, props, hasSubmenu, root }">
-                <a v-ripple class="flex align-items-center" v-bind="props.action">
+                <a v-ripple class="flex align-items-center" v-bind="props.action" @click="test(item.route)">
                     <span :class="item.icon" />
                     <span class="ml-2">{{ item.label }}</span>
                     <Badge v-if="item.badge" :class="{ 'ml-auto': !root, 'ml-2': root }" :value="item.badge" />
@@ -32,7 +32,7 @@
             </template>
         </Menubar>
         <div class="mt-5 flex justify-content-center align-items-center w-full h-auto">
-            <div class="grid">
+            <div class="grid container">
                 <div class="col-12 mx-auto">
                     <router-view></router-view>
                 </div>
@@ -43,57 +43,84 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch, watchEffect } from "vue"
+import { Ref, ref } from "vue"
 import Menubar from 'primevue/menubar';
 import InputText from "primevue/inputtext";
 import Avatar from "primevue/avatar";
-const items = ref([
+import { useRouter } from "vue-router"
+import { MenuItems } from './types/altypes'
+const router = useRouter()
+const items: Ref<MenuItems[]> = ref([
     {
-        label: 'Home',
-        icon: 'pi pi-home'
+        label: 'Feed',
+        icon: 'pi pi-home',
+        route: 'feed'
     },
     {
-        label: 'Features',
-        icon: 'pi pi-star'
+        label: 'Photos',
+        icon: 'pi pi-star',
+        route: 'photos'
     },
-    {
-        label: 'Projects',
-        icon: 'pi pi-search',
-        items: [
-            {
-                label: 'Components',
-                icon: 'pi pi-bolt'
-            },
-            {
-                label: 'Blocks',
-                icon: 'pi pi-server'
-            },
-            {
-                label: 'UI Kit',
-                icon: 'pi pi-pencil'
-            },
-            {
-                label: 'Templates',
-                icon: 'pi pi-palette',
-                items: [
-                    {
-                        label: 'Apollo',
-                        icon: 'pi pi-palette'
-                    },
-                    {
-                        label: 'Ultima',
-                        icon: 'pi pi-palette'
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        label: 'Contact',
-        icon: 'pi pi-envelope'
-    }
+    // {
+    //     label: 'Projects',
+    //     icon: 'pi pi-search',
+    //     items: [
+    //         {
+    //             label: 'Components',
+    //             icon: 'pi pi-bolt'
+    //         },
+    //         {
+    //             label: 'Blocks',
+    //             icon: 'pi pi-server'
+    //         },
+    //         {
+    //             label: 'UI Kit',
+    //             icon: 'pi pi-pencil'
+    //         },
+    //         {
+    //             label: 'Templates',
+    //             icon: 'pi pi-palette',
+    //             items: [
+    //                 {
+    //                     label: 'Apollo',
+    //                     icon: 'pi pi-palette'
+    //                 },
+    //                 {
+    //                     label: 'Ultima',
+    //                     icon: 'pi pi-palette'
+    //                 }
+    //             ]
+    //         }
+    //     ]
+    // },
+    // {
+    //     label: 'Contact',
+    //     icon: 'pi pi-envelope',
+    //     route: 'feed'
+    // }
 ]);
+
+const test = (routeName: string): void => {
+    router.push({ name: routeName })
+}
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.container {
+    margin: 2rem 20rem;
+}
+
+@media screen and (max-width: 1024px) {
+    .container {
+        margin: 0rem 10rem;
+    }
+}
+
+
+@media screen and (max-width: 768px) {
+    .container {
+        margin: 0rem 1rem;
+    }
+}
+</style>
