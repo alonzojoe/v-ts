@@ -1,5 +1,9 @@
 import { createApp } from 'vue'
-import './style.css'
+import PrimeVue from 'primevue/config'
+import 'primevue/resources/themes/lara-dark-green/theme.css'
+import 'primeflex/primeflex.css'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+const app = createApp(App);
+app.use(PrimeVue)
+app.mount('#app');
