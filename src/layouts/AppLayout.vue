@@ -13,7 +13,7 @@
                 </svg>
             </template>
             <template #item="{ item, props, hasSubmenu, root }">
-                <a v-ripple class="flex align-items-center" v-bind="props.action" @click="test(item.route)">
+                <a v-ripple class="flex align-items-center" v-bind="props.action" @click="redirect(item.route)">
                     <span :class="item.icon" />
                     <span class="ml-2">{{ item.label }}</span>
                     <Badge v-if="item.badge" :class="{ 'ml-auto': !root, 'ml-2': root }" :value="item.badge" />
@@ -26,7 +26,7 @@
             </template>
             <template #end>
                 <div class="flex align-items-center gap-2">
-                    <InputText placeholder="Search" type="text" class="w-8rem sm:w-auto" />
+                    <InputText placeholder="Search" type="text" class="w-8rem sm:w-auto" v-model="searchField" />
                     <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" />
                 </div>
             </template>
@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, ref } from "vue"
+import { Ref, ref, provide } from "vue"
 import Menubar from 'primevue/menubar';
 import InputText from "primevue/inputtext";
 import Avatar from "primevue/avatar";
@@ -100,7 +100,10 @@ const items: Ref<MenuItems[]> = ref([
     // }
 ]);
 
-const test = (routeName: string): void => {
+const searchField = ref('')
+provide('searchField', searchField)
+
+const redirect = (routeName: string): void => {
     router.push({ name: routeName })
 }
 
